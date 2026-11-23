@@ -32,6 +32,7 @@ The API client defaults to `http://localhost:4000/api`. To use another API URL, 
 - `assets/js/events.js` handles event discovery, filtering, details, registration/cancellation, feedback submission, and “My registrations”.
 - `assets/js/announcements.js` handles published announcements, accessible audio playback, and admin announcement management.
 - `assets/js/promos.js` handles published promos, captioned video playback, pagination, and admin promo management.
+- `assets/js/notifications.js` handles the notification inbox, detail view, unread count, related links, and admin deletion.
 - `assets/js/api.js` adds the `Authorization: Bearer <token>` header to protected requests, serializes JSON payloads, supports `FormData`, and redirects on `401`.
 - `assets/js/ui.js` provides shared loading, toast, and API error presentation.
 - `assets/js/layout.js` renders the shared header, navigation, notification entry point, and footer.

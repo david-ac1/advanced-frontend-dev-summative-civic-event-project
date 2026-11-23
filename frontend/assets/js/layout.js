@@ -43,6 +43,28 @@
       window.CivicEvents.auth.clearSession();
       window.location.assign('login.html');
     });
+
+    updateNotificationBadge();
+  }
+
+  function updateNotificationBadge() {
+    if (!window.CivicEvents.auth.isAuthenticated()) return;
+    window.CivicEvents.api.get('/notifications')
+      .then(function (response) {
+        var items = response && Array.isArray(response.data) ? response.data : [];
+        var unreadCount = items.filter(function (notification) {
+          return notification.read === false;
+        }).length;
+        var badge = $('#site-header .notification-badge');
+        if (unreadCount > 0) {
+          badge.text(unreadCount).prop('hidden', false);
+        } else {
+          badge.prop('hidden', true);
+        }
+      })
+      .catch(function () {
+        $('#site-header .notification-badge').prop('hidden', true);
+      });
   }
 
   function renderFooter() {

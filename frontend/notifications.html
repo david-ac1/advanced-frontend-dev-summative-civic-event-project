@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View CivicEvents notifications.">
+  <title>Notifications | CivicEvents</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main id="app-main" class="page-shell" tabindex="-1">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">Updates</p>
+        <h1>Notifications</h1>
+        <p class="page-intro">Broadcast and account-specific updates from CivicEvents.</p>
+      </div>
+    </div>
+    <div class="notification-layout">
+      <section class="notification-inbox" aria-labelledby="notification-inbox-heading">
+        <div class="section-heading">
+          <h2 id="notification-inbox-heading">Inbox</h2>
+          <span id="notification-count" class="muted-label"></span>
+        </div>
+        <div id="notifications-status" class="section-status" role="status" aria-live="polite"></div>
+        <div id="notifications-list" class="notification-list"></div>
+      </section>
+      <aside id="notification-detail-panel" class="notification-detail-panel" aria-labelledby="notification-detail-heading" hidden>
+        <p class="eyebrow">Notification</p>
+        <h2 id="notification-detail-heading">Details</h2>
+        <div id="notification-detail"></div>
+      </aside>
+    </div>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="loading-region" class="loading-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/notifications.js"></script>
+</body>
+</html>
