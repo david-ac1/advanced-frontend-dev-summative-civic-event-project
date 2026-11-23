@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a CivicEvents account.">
+  <title>Create account | CivicEvents</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <main class="auth-page" tabindex="-1">
+    <section class="auth-card" aria-labelledby="signup-heading">
+      <a class="brand auth-brand" href="index.html">CivicEvents</a>
+      <p class="eyebrow">Join your community</p>
+      <h1 id="signup-heading">Create an account</h1>
+      <p class="auth-intro">Register to save events, join activities, and share feedback.</p>
+
+      <div id="auth-message" class="form-message" role="status" aria-live="polite" hidden></div>
+      <form id="signup-form" class="auth-form" novalidate>
+        <div class="form-field">
+          <label for="signup-name">Full name</label>
+          <input id="signup-name" name="full_name" type="text" autocomplete="name" required>
+          <span class="field-error" data-error-for="signup-name"></span>
+        </div>
+        <div class="form-field">
+          <label for="signup-email">Email</label>
+          <input id="signup-email" name="email" type="email" autocomplete="email" required>
+          <span class="field-error" data-error-for="signup-email"></span>
+        </div>
+        <div class="form-field">
+          <label for="signup-password">Password</label>
+          <input id="signup-password" name="password" type="password" autocomplete="new-password" required>
+          <div class="password-meter" aria-live="polite">
+            <div class="password-meter-track"><span id="password-meter-bar"></span></div>
+            <span id="password-meter-label">Use 8+ characters with upper/lowercase, a number, and a special character.</span>
+          </div>
+          <span class="field-error" data-error-for="signup-password"></span>
+        </div>
+        <div class="form-field">
+          <label for="signup-confirm-password">Confirm password</label>
+          <input id="signup-confirm-password" name="confirm_password" type="password" autocomplete="new-password" required>
+          <span class="field-error" data-error-for="signup-confirm-password"></span>
+        </div>
+        <button class="button button-primary button-wide" type="submit">Create account</button>
+      </form>
+      <p class="auth-footer">Already registered? <a href="login.html">Sign in</a></p>
+    </section>
+  </main>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="loading-region" class="loading-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script src="assets/js/auth-pages.js"></script>
+</body>
+</html>

@@ -9,6 +9,9 @@
       : '';
     var profileLabel = user ? 'Profile' : 'Sign in';
     var profileHref = user ? 'profile.html' : 'login.html';
+    var sessionAction = user
+      ? '<button class="text-button" type="button" data-action="logout">Sign out</button>'
+      : '';
 
     $('#site-header').html(
       '<div class="site-header">' +
@@ -30,11 +33,16 @@
             '<span class="notification-badge" hidden>0</span>' +
           '</a>' +
           '<a class="profile-link" href="' + profileHref + '">' + profileLabel + '</a>' +
+          sessionAction +
         '</div>' +
       '</div>'
     );
 
     $('#site-header [data-page="' + currentPage + '"]').attr('aria-current', 'page');
+    $('#site-header [data-action="logout"]').on('click', function () {
+      window.CivicEvents.auth.clearSession();
+      window.location.assign('login.html');
+    });
   }
 
   function renderFooter() {
