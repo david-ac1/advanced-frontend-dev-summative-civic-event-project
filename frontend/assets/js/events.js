@@ -258,104 +258,6 @@
       ui.showToast('Select a rating before submitting feedback.', 'error');
       return;
     }
-
-    function toLocalDateTime(value) {
-      if (!value) return '';
-      var date = new Date(value);
-      if (Number.isNaN(date.getTime())) return '';
-      var offset = date.getTimezoneOffset();
-      return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 16);
-    }
-
-    function validateEventImage(file) {
-      if (!file) return '';
-      var extension = file.name.split('.').pop().toLowerCase();
-      if (!['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
-        return 'Use a JPG, JPEG, PNG, or GIF image.';
-      }
-      if (file.size > 2 * 1024 * 1024) {
-        return 'Images must be 2 MB or smaller.';
-      }
-      return '';
-    }
-
-    function setEventFormMessage(message, type) {
-      $('#event-form-message')
-        .removeClass('form-message-success form-message-error')
-        .addClass('form-message-' + type)
-        .text(message)
-        .prop('hidden', false);
-    }
-
-    function loadEventForm(id) {
-      ui.setLoading('Loading event...');
-      api.get('/events/' + encodeURIComponent(id))
-        .then(function (response) {
-          var event = response && response.data;
-          $('#event-title').val(event.title || '');
-          $('#event-description').val(event.description || '');
-          $('#event-location').val(event.location || '');
-          $('#event-starts').val(toLocalDateTime(event.starts_at));
-          $('#event-ends').val(toLocalDateTime(event.ends_at));
-          $('#event-published').prop('checked', event.published !== false);
-          $('#event-form-heading').text('Edit event');
-          if (event.metadata && event.metadata.image_url) {
-            $('#event-image-preview').attr('src', event.metadata.image_url).prop('hidden', false);
-          }
-        })
-        .catch(function (error) {
-          setEventFormMessage(ui.getApiErrorMessage(error), 'error');
-        })
-        .finally(function () {
-          ui.clearLoading();
-        });
-    }
-
-    function submitEventForm(event) {
-      event.preventDefault();
-      var title = $.trim($('#event-title').val());
-      var location = $.trim($('#event-location').val());
-      var starts = $('#event-starts').val();
-      var ends = $('#event-ends').val();
-      var file = $('#event-image')[0].files[0];
-      var fileError = validateEventImage(file);
-      $('[data-error-for]').text('');
-      if (!title) $('[data-error-for="event-title"]').text('Enter a title.');
-      if (!location) $('[data-error-for="event-location"]').text('Enter a location.');
-      if (!starts) $('[data-error-for="event-starts"]').text('Choose a start date and time.');
-      if (!ends) $('[data-error-for="event-ends"]').text('Choose an end date and time.');
-      if (starts && ends && new Date(ends) <= new Date(starts)) {
-        $('[data-error-for="event-ends"]').text('End time must be after the start time.');
-      }
-      if (fileError) $('[data-error-for="event-image"]').text(fileError);
-      if (!title || !location || !starts || !ends || (starts && ends && new Date(ends) <= new Date(starts)) || fileError) return;
-
-      var formData = new FormData();
-      formData.append('title', title);
-      formData.append('description', $.trim($('#event-description').val()));
-      formData.append('location', location);
-      formData.append('starts_at', new Date(starts).toISOString());
-      formData.append('ends_at', new Date(ends).toISOString());
-      formData.append('published', String($('#event-published').is(':checked')));
-      if (file) formData.append('image', file);
-
-      var id = getEventId();
-      ui.setLoading(id ? 'Updating event...' : 'Creating event...');
-      var request = id
-        ? api.put('/events/' + encodeURIComponent(id), formData)
-        : api.post('/events', formData);
-      request.then(function (response) {
-        ui.clearLoading();
-        setEventFormMessage(response.message || 'Event saved successfully.', 'success');
-        ui.showToast(id ? 'Event updated.' : 'Event created.');
-        window.setTimeout(function () {
-          window.location.assign('events.html');
-        }, 700);
-      }).catch(function (error) {
-        ui.clearLoading();
-        setEventFormMessage(ui.getApiErrorMessage(error), 'error');
-      });
-    }
     var button = $('#feedback-form button[type="submit"]');
     button.prop('disabled', true).text('Submitting...');
     api.post('/event-feedback', {
@@ -369,6 +271,104 @@
       ui.showToast(ui.getApiErrorMessage(error), 'error');
     }).finally(function () {
       button.prop('disabled', false).text('Submit feedback');
+    });
+  }
+
+  function toLocalDateTime(value) {
+    if (!value) return '';
+    var date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    var offset = date.getTimezoneOffset();
+    return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 16);
+  }
+
+  function validateEventImage(file) {
+    if (!file) return '';
+    var extension = file.name.split('.').pop().toLowerCase();
+    if (!['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+      return 'Use a JPG, JPEG, PNG, or GIF image.';
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      return 'Images must be 2 MB or smaller.';
+    }
+    return '';
+  }
+
+  function setEventFormMessage(message, type) {
+    $('#event-form-message')
+      .removeClass('form-message-success form-message-error')
+      .addClass('form-message-' + type)
+      .text(message)
+      .prop('hidden', false);
+  }
+
+  function loadEventForm(id) {
+    ui.setLoading('Loading event...');
+    api.get('/events/' + encodeURIComponent(id))
+      .then(function (response) {
+        var event = response && response.data;
+        $('#event-title').val(event.title || '');
+        $('#event-description').val(event.description || '');
+        $('#event-location').val(event.location || '');
+        $('#event-starts').val(toLocalDateTime(event.starts_at));
+        $('#event-ends').val(toLocalDateTime(event.ends_at));
+        $('#event-published').prop('checked', event.published !== false);
+        $('#event-form-heading').text('Edit event');
+        if (event.metadata && event.metadata.image_url) {
+          $('#event-image-preview').attr('src', event.metadata.image_url).prop('hidden', false);
+        }
+      })
+      .catch(function (error) {
+        setEventFormMessage(ui.getApiErrorMessage(error), 'error');
+      })
+      .finally(function () {
+        ui.clearLoading();
+      });
+  }
+
+  function submitEventForm(event) {
+    event.preventDefault();
+    var title = $.trim($('#event-title').val());
+    var location = $.trim($('#event-location').val());
+    var starts = $('#event-starts').val();
+    var ends = $('#event-ends').val();
+    var file = $('#event-image')[0].files[0];
+    var fileError = validateEventImage(file);
+    $('[data-error-for]').text('');
+    if (!title) $('[data-error-for="event-title"]').text('Enter a title.');
+    if (!location) $('[data-error-for="event-location"]').text('Enter a location.');
+    if (!starts) $('[data-error-for="event-starts"]').text('Choose a start date and time.');
+    if (!ends) $('[data-error-for="event-ends"]').text('Choose an end date and time.');
+    if (starts && ends && new Date(ends) <= new Date(starts)) {
+      $('[data-error-for="event-ends"]').text('End time must be after the start time.');
+    }
+    if (fileError) $('[data-error-for="event-image"]').text(fileError);
+    if (!title || !location || !starts || !ends || (starts && ends && new Date(ends) <= new Date(starts)) || fileError) return;
+
+    var formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', $.trim($('#event-description').val()));
+    formData.append('location', location);
+    formData.append('starts_at', new Date(starts).toISOString());
+    formData.append('ends_at', new Date(ends).toISOString());
+    formData.append('published', String($('#event-published').is(':checked')));
+    if (file) formData.append('image', file);
+
+    var id = getEventId();
+    ui.setLoading(id ? 'Updating event...' : 'Creating event...');
+    var request = id
+      ? api.put('/events/' + encodeURIComponent(id), formData)
+      : api.post('/events', formData);
+    request.then(function (response) {
+      ui.clearLoading();
+      setEventFormMessage(response.message || 'Event saved successfully.', 'success');
+      ui.showToast(id ? 'Event updated.' : 'Event created.');
+      window.setTimeout(function () {
+        window.location.assign('events.html');
+      }, 700);
+    }).catch(function (error) {
+      ui.clearLoading();
+      setEventFormMessage(ui.getApiErrorMessage(error), 'error');
     });
   }
 
