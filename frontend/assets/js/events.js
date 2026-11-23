@@ -127,7 +127,11 @@
         renderEvents();
       })
       .catch(function (error) {
-        $('#events-status').text(ui.getApiErrorMessage(error));
+        $('#events-status').html(
+          '<span>' + escapeHtml(ui.getApiErrorMessage(error)) + ' </span>' +
+          '<button id="retry-events" class="text-button" type="button">Retry</button>'
+        );
+        $('#retry-events').on('click', loadEvents);
       })
       .finally(function () {
         ui.clearLoading();
@@ -305,6 +309,10 @@
     if (!guards.requireAuth()) return;
     window.CivicEvents.layout.render();
     if (getPage() === 'events.html') {
+      var initialQuery = new URLSearchParams(window.location.search).get('q');
+      if (initialQuery) {
+        $('#event-search').val(initialQuery);
+      }
       $('#event-filters').on('submit', function (event) {
         event.preventDefault();
         renderEvents();

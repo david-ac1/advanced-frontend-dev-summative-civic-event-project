@@ -44,6 +44,18 @@
       window.location.assign('login.html');
     });
 
+    $('#global-search').on('keydown', function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        var query = $.trim($(this).val());
+        if (query) {
+          window.location.assign('events.html?q=' + encodeURIComponent(query));
+        } else {
+          window.location.assign('events.html');
+        }
+      }
+    });
+
     updateNotificationBadge();
   }
 
@@ -78,6 +90,15 @@
   }
 
   function render() {
+    var firstMain = $('main').first();
+    if (!firstMain.attr('id')) {
+      firstMain.attr('id', 'app-main');
+    }
+    if (!$('#skip-link').length) {
+      $('body').prepend(
+        '<a id="skip-link" class="skip-link" href="#app-main">Skip to main content</a>'
+      );
+    }
     renderHeader();
     renderFooter();
   }
