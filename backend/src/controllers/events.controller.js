@@ -6,6 +6,7 @@ import * as Notifications from '../models/notifications.model.js';
 export const create = async (req, res, next) => {
     try {
         const { title, description, location, starts_at, ends_at } = req.body;
+        const published = req.body.published === true || req.body.published === 'true';
 
         // Base event data
         const eventData = {
@@ -14,6 +15,7 @@ export const create = async (req, res, next) => {
             location,
             starts_at,
             ends_at,
+            published,
             created_at: new Date(),
             updated_at: new Date(),
             metadata: {}
@@ -97,6 +99,9 @@ export const update = async (req, res, next) => {
 
         // Prepare updated data
         const { title, description, location, starts_at, ends_at } = req.body;
+        const published = req.body.published === undefined
+            ? existingEvent.published
+            : req.body.published === true || req.body.published === 'true';
         const metadata = { ...existingEvent.metadata };
 
         // Handle new image upload
@@ -126,6 +131,7 @@ export const update = async (req, res, next) => {
             location: location ?? existingEvent.location,
             starts_at: starts_at ?? existingEvent.starts_at,
             ends_at: ends_at ?? existingEvent.ends_at,
+            published,
             metadata,
             updated_at: new Date(),
         };
@@ -168,4 +174,3 @@ export const remove = async (req, res, next) => {
         next(err);
     }
 };
-
