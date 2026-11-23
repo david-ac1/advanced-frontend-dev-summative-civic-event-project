@@ -30,6 +30,7 @@ The API client defaults to `http://localhost:4000/api`. To use another API URL, 
 - `assets/js/guards.js` provides authenticated and admin-only page guards.
 - `assets/js/auth-pages.js` handles login, signup, password validation, and the password-strength meter.
 - `assets/js/events.js` handles event discovery, filtering, details, registration/cancellation, feedback submission, and “My registrations”.
+- `assets/js/announcements.js` handles published announcements, accessible audio playback, and admin announcement management.
 - `assets/js/api.js` adds the `Authorization: Bearer <token>` header to protected requests, serializes JSON payloads, supports `FormData`, and redirects on `401`.
 - `assets/js/ui.js` provides shared loading, toast, and API error presentation.
 - `assets/js/layout.js` renders the shared header, navigation, notification entry point, and footer.

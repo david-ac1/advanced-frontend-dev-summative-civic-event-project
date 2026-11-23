@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage CivicEvents announcements.">
+  <title>Manage announcement | CivicEvents</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main id="app-main" class="page-shell" tabindex="-1">
+    <a class="back-link" href="announcements.html">← Back to announcements</a>
+    <section class="form-panel" aria-labelledby="announcement-form-heading">
+      <p class="eyebrow">Admin tools</p>
+      <h1 id="announcement-form-heading">Create announcement</h1>
+      <p class="page-intro">Upload an accessible audio update for the community.</p>
+      <div id="announcement-form-message" class="form-message" role="status" aria-live="polite" hidden></div>
+      <form id="announcement-form" class="admin-form" novalidate>
+        <div class="form-field">
+          <label for="announcement-title">Title</label>
+          <input id="announcement-title" type="text" required>
+          <span class="field-error" data-error-for="announcement-title"></span>
+        </div>
+        <div class="form-field">
+          <label for="announcement-audio">Audio file <span id="announcement-audio-help" class="muted-label">(MP3, WAV, M4A, or OGG; max 5 MB)</span></label>
+          <input id="announcement-audio" type="file" accept=".mp3,.wav,.m4a,.ogg,audio/*">
+          <span id="announcement-audio-name" class="muted-label">No file selected.</span>
+          <span class="field-error" data-error-for="announcement-audio"></span>
+        </div>
+        <label class="checkbox-field">
+          <input id="announcement-published" type="checkbox" checked>
+          <span>Publish immediately</span>
+        </label>
+        <div class="form-actions">
+          <a class="button button-secondary" href="announcements.html">Cancel</a>
+          <button class="button button-primary" type="submit">Save announcement</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="loading-region" class="loading-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/announcements.js"></script>
+</body>
+</html>
