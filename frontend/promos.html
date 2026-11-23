@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Watch CivicEvents promos with captions.">
+  <title>Promos | CivicEvents</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main id="app-main" class="page-shell" tabindex="-1">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">Community stories</p>
+        <h1>Promos</h1>
+        <p class="page-intro">Watch updates and stories from across the community, with captions available.</p>
+      </div>
+      <a id="create-promo-link" class="button button-primary" href="admin-promo-form.html" hidden>Create promo</a>
+    </div>
+    <div id="promos-status" class="section-status" role="status" aria-live="polite"></div>
+    <div id="promos-grid" class="promo-grid"></div>
+    <nav id="promos-pagination" class="pagination" aria-label="Promos pagination" hidden></nav>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="loading-region" class="loading-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/promos.js"></script>
+</body>
+</html>

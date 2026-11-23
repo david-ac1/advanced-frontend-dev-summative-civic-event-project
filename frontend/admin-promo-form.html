@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage CivicEvents promos.">
+  <title>Manage promo | CivicEvents</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main id="app-main" class="page-shell" tabindex="-1">
+    <a class="back-link" href="promos.html">← Back to promos</a>
+    <section class="form-panel" aria-labelledby="promo-form-heading">
+      <p class="eyebrow">Admin tools</p>
+      <h1 id="promo-form-heading">Create promo</h1>
+      <p class="page-intro">Share a captioned video update with the community.</p>
+      <div id="promo-form-message" class="form-message" role="status" aria-live="polite" hidden></div>
+      <form id="promo-form" class="admin-form" novalidate>
+        <div class="form-field">
+          <label for="promo-title">Title</label>
+          <input id="promo-title" type="text" required>
+          <span class="field-error" data-error-for="promo-title"></span>
+        </div>
+        <div class="form-field">
+          <label for="promo-description">Description</label>
+          <textarea id="promo-description" rows="4" required></textarea>
+          <span class="field-error" data-error-for="promo-description"></span>
+        </div>
+        <div class="form-field">
+          <label for="promo-video">Video <span id="promo-video-help" class="muted-label">(MP4, MOV, AVI, or MKV; max 8 MB)</span></label>
+          <input id="promo-video" type="file" accept=".mp4,.mov,.avi,.mkv,video/*">
+          <span id="promo-video-name" class="muted-label">No file selected.</span>
+          <span class="field-error" data-error-for="promo-video"></span>
+        </div>
+        <div class="form-field">
+          <label for="promo-captions">Caption text</label>
+          <textarea id="promo-captions" rows="6" required placeholder="Write the spoken content or meaningful audio information."></textarea>
+          <span class="field-error" data-error-for="promo-captions"></span>
+        </div>
+        <label class="checkbox-field">
+          <input id="promo-published" type="checkbox" checked>
+          <span>Publish immediately</span>
+        </label>
+        <div class="form-actions">
+          <a class="button button-secondary" href="promos.html">Cancel</a>
+          <button class="button button-primary" type="submit">Save promo</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="loading-region" class="loading-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/promos.js"></script>
+</body>
+</html>
