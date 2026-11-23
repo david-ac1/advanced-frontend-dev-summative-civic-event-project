@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Manage your CivicEvents profile.">
+  <title>My profile | CivicEvents</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header id="site-header"></header>
+  <main id="app-main" class="page-shell" tabindex="-1">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">Account</p>
+        <h1>My profile</h1>
+        <p class="page-intro">Review and update your CivicEvents account details.</p>
+      </div>
+    </div>
+    <section class="form-panel profile-panel" aria-labelledby="profile-heading">
+      <h2 id="profile-heading">Profile details</h2>
+      <div id="profile-status" class="form-message" role="status" aria-live="polite" hidden></div>
+      <form id="profile-form" class="admin-form" novalidate>
+        <div class="form-field">
+          <label for="profile-name">Full name</label>
+          <input id="profile-name" type="text" autocomplete="name" required>
+          <span class="field-error" data-error-for="profile-name"></span>
+        </div>
+        <div class="form-field">
+          <label for="profile-email">Email</label>
+          <input id="profile-email" type="email" autocomplete="email" required>
+          <span class="field-error" data-error-for="profile-email"></span>
+        </div>
+        <div class="readonly-grid" aria-label="Account permissions">
+          <div>
+            <span class="muted-label">Role</span>
+            <strong id="profile-role">User</strong>
+          </div>
+          <div>
+            <span class="muted-label">Status</span>
+            <strong id="profile-status-value">Active</strong>
+          </div>
+        </div>
+        <p class="muted-label">Your role and account status are controlled by an administrator.</p>
+        <div class="form-actions">
+          <button class="button button-primary" type="submit">Save changes</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <footer id="site-footer"></footer>
+  <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  <div id="loading-region" class="loading-region" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/guards.js"></script>
+  <script src="assets/js/layout.js"></script>
+  <script src="assets/js/profile.js"></script>
+</body>
+</html>
