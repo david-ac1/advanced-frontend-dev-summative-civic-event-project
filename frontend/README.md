@@ -23,6 +23,16 @@ This directory contains the CivicEvents frontend. It uses semantic HTML, Tailwin
 
 The API client defaults to `http://localhost:4000/api`. To use another API URL, set `window.CIVIC_EVENTS_API_URL` before the application scripts load.
 
+Example:
+
+```html
+<script>
+  window.CIVIC_EVENTS_API_URL = "http://localhost:4000/api";
+</script>
+```
+
+Backend setup is documented in the repository [README](../README.md) and [backend README](../backend/README.md).
+
 ## Shared foundation
 
 - `assets/js/config.js` contains API and session-storage configuration.

@@ -22,6 +22,14 @@ build/
 *.sqlite
 *.sqlite3
 
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Uploaded runtime files
+uploads/
+
 # OS-specific files
 .DS_Store
 Thumbs.db

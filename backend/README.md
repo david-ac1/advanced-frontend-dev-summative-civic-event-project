@@ -54,20 +54,29 @@ Before setting up, make sure you have the following installed:
 - Create a new Postman collection
     - Import the file `CivicEvents+ API.postman_collection.json` located in the backend directory into postman
 
-## 4. Populate Database With Tables
-- Open the terminal (Git Bash) in VSCode and complete the tasks below
-    - Paste the below variables in the terminal and run. Replace these with actual db credentials
-    ```
-    export DB_USER=<db-user>
-    export DB_PASSWORD=<db-password>
-    export DB_NAME=civic-events-db
-    export DB_HOST=<db_host>
-    export DB_PORT=<db_port>
-    ```
+## 4. Configure the database and environment
 
-- Run the command `psql -U $DB_USER -d $DB_NAME -h $DB_HOST -p $DB_PORT -f ./migrations/001_create_tables.sql` to create the necessary tables in your database
+Copy `.env.example` to `.env` and set the local values:
 
-- Configure the Environment Variables: Change the values in the `.env` file with the approapriate database credentials
+```env
+DB_USER=postgres
+DB_PASS=your_postgresql_password
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=civic-events-db
+JWT_SECRET=replace_with_a_long_random_string
+```
+
+The application reads `DB_PASS`, not `DB_PASSWORD`. `.env` is secret configuration and must not be committed.
+
+PowerShell migration command:
+
+```powershell
+$env:PGPASSWORD="your_postgresql_password"
+psql -U postgres -d civic-events-db -h localhost -p 5432 -f ./migrations/001_create_tables.sql
+```
+
+Alternatively, open `civic-events-db` in pgAdmin, open Query Tool, and execute `migrations/001_create_tables.sql`.
 
 ## 5. Install Node Dependencies
 - To install dependencies, run the command `npm install`
