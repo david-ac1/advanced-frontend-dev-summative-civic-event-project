@@ -407,20 +407,45 @@
         }
         container.html(list.map(function (registration) {
           var isCancelled = registration.status === 'cancelled';
+          var cancelBtn = isCancelled ? '' :
+            '<button class="button button-danger cancel-registration" type="button" data-event-id="' +
+            escapeHtml(registration.event_id) + '">Cancel registration</button>';
           return '<article class="registration-card">' +
             '<div><span class="tag">' + (isCancelled ? 'Cancelled' : 'Registered') + '</span>' +
             '<h2>' + escapeHtml(registration.title) + '</h2>' +
             '<p class="event-meta">' + escapeHtml(formatDate(registration.starts_at, true)) + '</p>' +
             '<p class="event-meta">' + escapeHtml(registration.location || 'Location to be confirmed') + '</p></div>' +
-            '<a class="button button-secondary" href="event-detail.html?id=' + encodeURIComponent(registration.event_id) + '">View event</a>' +
+            '<div class="registration-actions">' +
+              '<a class="button button-secondary" href="event-detail.html?id=' + encodeURIComponent(registration.event_id) + '">View event</a>' +
+              cancelBtn +
+            '</div>' +
           '</article>';
         }).join(''));
+        $('#registrations-list').find('.cancel-registration').on('click', function () {
+          var eventId = $(this).data('event-id');
+          var button = $(this);
+          cancelRegistrationFromMyRegistrations(eventId, button);
+        });
       })
       .catch(function (error) {
         $('#registrations-status').text(ui.getApiErrorMessage(error));
       })
       .finally(function () {
         ui.clearLoading();
+      });
+  }
+
+  function cancelRegistrationFromMyRegistrations(eventId, button) {
+    if (!window.confirm('Cancel your registration for this event?')) return;
+    button.prop('disabled', true).text('Cancelling...');
+    api.post('/event-registrations/cancel', { event_id: eventId })
+      .then(function () {
+        ui.showToast('Registration cancelled.');
+        loadRegistrations();
+      })
+      .catch(function (error) {
+        button.prop('disabled', false).text('Cancel registration');
+        ui.showToast(ui.getApiErrorMessage(error), 'error');
       });
   }
 
@@ -444,7 +469,8 @@
       });
       $('#event-form').on('submit', submitEventForm);
     } else if (getPage() === 'events.html') {
-      $('#create-event-link').prop('hidden', !auth.isAdmin());
+      var $createEventLink = $('#create-event-link');
+      $createEventLink.prop('hidden', !auth.isAdmin()).toggle(auth.isAdmin());
       var initialQuery = new URLSearchParams(window.location.search).get('q');
       if (initialQuery) {
         $('#event-search').val(initialQuery);

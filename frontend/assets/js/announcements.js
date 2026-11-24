@@ -235,7 +235,8 @@
     if (!guards.requireAuth()) return;
     window.CivicEvents.layout.render();
     if (getPage() === 'announcements.html') {
-      $('#create-announcement-link').prop('hidden', !auth.isAdmin());
+      var $createAnnouncementLink = $('#create-announcement-link');
+      $createAnnouncementLink.prop('hidden', !auth.isAdmin()).toggle(auth.isAdmin());
       loadList();
     } else if (getPage() === 'announcement-detail.html') {
       loadDetail();

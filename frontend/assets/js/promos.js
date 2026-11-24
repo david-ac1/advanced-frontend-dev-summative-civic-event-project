@@ -168,8 +168,7 @@
         '<h1>' + escapeHtml(promo.title) + '</h1>' +
         '<p class="event-meta">Added ' + escapeHtml(formatDate(promo.created_at)) + '</p>' +
         '<p class="detail-description">' + escapeHtml(promo.description || 'No description available.') + '</p>' +
-        '<h2 class="transcript-heading">Transcript</h2>' +
-        '<p class="detail-description">' + escapeHtml(promo.caption_text || 'No transcript available.') + '</p>' +
+        '<p class="muted-label">Captions are enabled by default. Use the video player controls to toggle captions or adjust volume.</p>' +
       '</div>'
     );
   }
@@ -275,7 +274,8 @@
     if (!guards.requireAuth()) return;
     window.CivicEvents.layout.render();
     if (getPage() === 'promos.html') {
-      $('#create-promo-link').prop('hidden', !auth.isAdmin());
+      var $createPromoLink = $('#create-promo-link');
+      $createPromoLink.prop('hidden', !auth.isAdmin()).toggle(auth.isAdmin());
       loadList(1);
     } else if (getPage() === 'promo-detail.html') {
       loadDetail();
